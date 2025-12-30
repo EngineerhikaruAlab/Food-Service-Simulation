@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Persons\Employees;
 use Persons\Person;
 
+
 abstract class Employee extends Person {
     protected int $employeeId;
     protected float $salary;

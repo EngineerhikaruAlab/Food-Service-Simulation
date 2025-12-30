@@ -7,16 +7,22 @@ use Restaurants\Restaurant;
 use Invoices\Invoice;
 use Persons\Person;
 class Customer extends Person {
-    private array $interestedTastesMap;
 
-    public function __construct(string $name, int $age, string $address, array $interestedTastesMap)
+    public function __construct(string $name, int $age, string $address)
     {
         parent::__construct($name, $age, $address);
-        $this->interestedTastesMap = $interestedTastesMap;
     }
 
     public function interestedCategories(Restaurant $restaurant): array {
-        return array_keys($this->interestedTastesMap);
+        $menu = $restaurant->getMenu();
+        $categories = [];
+        foreach($menu as $item) {
+            $cat = $item->getCategory();
+            if (!in_array($cat, $categories)) {
+                $categories[] = $cat;
+            }
+        }
+        return $categories;
     }
 
     public function order(Restaurant $restaurant, array $categories): Invoice {
